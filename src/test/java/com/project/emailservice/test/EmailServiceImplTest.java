@@ -1,12 +1,10 @@
 package com.project.emailservice.test;
 
-import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
 
 import java.io.File;
+import java.net.URL;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,24 +21,14 @@ import com.project.emailservice.service.impl.EmailServiceImpl;
 @SpringBootTest
 public class EmailServiceImplTest {
 	
-	File file = null;
-	
 	@Autowired
 	EmailService emailService;
 	
-	@Before
-	public void setUp() {
-		//Please uncomment this line and provide the path of the file you want to upload when you run the test case
-		String path = "/Users/vinayanayak/Documents/EmailList1.csv";
-		 file = new File(path);
-		assertThat(file.exists(),is(true));
-	}
-	
 	@Test
 	public void testparseCsvFile() {
-		String path = "/Users/vinayanayak/Documents/EmailList1.csv";
+		URL url = this.getClass().getResource("/EmailList.csv");
 		Path filePath = new Path();
-		filePath.setFilePath(path);
+		filePath.setFilePath(url.getPath());
 		boolean result = emailService.processFile(filePath);
 		assertEquals(true, result);
 	}
